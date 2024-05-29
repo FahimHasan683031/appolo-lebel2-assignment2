@@ -32,22 +32,59 @@ const getAllProducts = async (req: Request, res: Response) => {
 };
 
 const getSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await productServices.getSingleProductFromDB(productId);
+    res.status(200).json({
+      success: true,
+      message: 'Products fetched successfully!',
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err);
+  }
+};
+
+const updateSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await productServices.updateSingleProductFromDB(
+      productId,
+      req.body,
+    );
+    res.status(200).json({
+      success: true,
+      message: 'Product updated successfully!',
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err);
+  }
+};
+
+const deleteSingleProduct = async (req: Request, res: Response) => {
     try {
         const { productId } = req.params;
-      const result = await productServices.getSingleProductFromDB(productId);
-      res.status(200).json({
-        success: true,
-        message: 'Products fetched successfully!',
-        data: result,
-      });
-    } catch (err) {
-      console.log(err);
-      res.status(400).send(err);
-    }
-  };
+        const result = await productServices.deleteSingleProductFromDB(
+          productId
+        );
+        res.status(200).json({
+          success: true,
+          message: 'Product deleted successfully!',
+          data: result,
+        });
+      } catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+      }
+};
 
 export const productControllers = {
   createProduct,
   getAllProducts,
-  getSingleProduct
+  getSingleProduct,
+  updateSingleProduct,
+  deleteSingleProduct
 };
