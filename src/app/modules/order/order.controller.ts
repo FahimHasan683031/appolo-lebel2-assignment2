@@ -22,7 +22,7 @@ const createOrder = async (req: Request, res: Response) => {
 
 const getAllOrders = async (req: Request, res: Response) => {
   try {
-    const result:any = await orderServices.getAllOrdersFromDB(req.query);
+    const result= await orderServices.getAllOrdersFromDB(req.query);
     res.status(200).json({
       success: result.success,
       message: result.message,

@@ -1,10 +1,11 @@
+import { queryParamsType, queryType } from '../custom.type';
 import { productModel } from '../product/product.model';
 import { order } from './order.interface';
 import { orderModel } from './order.model';
 
 const createOrderIntoDB = async (order: order) => {
   // find the ordered product form order collection
-  const product: any = await productModel.findOne({ _id: order.productId });
+  const product= await productModel.findOne({ _id: order.productId });
 
   if(product){
 
@@ -19,7 +20,7 @@ const createOrderIntoDB = async (order: order) => {
         inStock: false,
       },
     };
-    const updateProduct = await productModel.findByIdAndUpdate(
+    await productModel.findByIdAndUpdate(
       { _id: order.productId },
       newProduct,
       {
@@ -40,7 +41,7 @@ const createOrderIntoDB = async (order: order) => {
     const newProduct = {
       $inc: { 'inventory.quantity': -order.quantity },
     };
-    const updateProduct = await productModel.findByIdAndUpdate(
+     await productModel.findByIdAndUpdate(
       { _id: order.productId },
       newProduct,
       {
@@ -66,8 +67,8 @@ const createOrderIntoDB = async (order: order) => {
 }
 };
 
-const getAllOrdersFromDB = async (queryParams: any) => {
-  const query: any = {};
+const getAllOrdersFromDB = async (queryParams: queryParamsType) => {
+  const query: queryType = {};
   if (queryParams.email) {
     query.email = queryParams.email;
   }

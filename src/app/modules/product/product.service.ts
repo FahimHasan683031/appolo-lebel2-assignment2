@@ -1,3 +1,5 @@
+
+import { queryParamsType, queryType } from '../custom.type';
 import { product } from './product.interface';
 import { productModel } from './product.model';
 
@@ -6,8 +8,8 @@ const createProductIntoDB = async (product: product) => {
   return result;
 };
 
-const getAllProductsFromDB = async (queryParams: any) => {
-  const query: any = {};
+const getAllProductsFromDB = async (queryParams:queryParamsType) => {
+  const query: queryType = {};
   if (queryParams.searchTerm) {
     query.name = new RegExp(queryParams.searchTerm, 'i');
   }
