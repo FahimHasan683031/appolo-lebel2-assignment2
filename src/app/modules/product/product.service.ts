@@ -12,7 +12,19 @@ const getAllProductsFromDB = async (queryParams: any) => {
     query.name = new RegExp(queryParams.searchTerm, 'i');
   }
   const result = await productModel.find(query);
-  return result;
+  if(queryParams.searchTerm){
+    return {
+      success: true,
+      message: `Products matching search term ${queryParams.searchTerm} fetched successfully!`,
+      data: result,
+    };
+  }else{
+    return {
+      success: true,
+      message: `Products fetched successfully!`,
+      data: result,
+    };
+  }
 };
 
 const getSingleProductFromDB = async (_id: string) => {

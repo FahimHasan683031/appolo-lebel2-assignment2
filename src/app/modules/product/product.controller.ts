@@ -23,9 +23,9 @@ const getAllProducts = async (req: Request, res: Response) => {
   try {
     const result = await productServices.getAllProductsFromDB(req.query);
     res.status(200).json({
-      success: true,
-      message: 'Products fetched successfully!',
-      data: result,
+      success: result.success,
+      message: result.message,
+      data: result.data,
     });
   } catch (err) {
     console.log(err);
