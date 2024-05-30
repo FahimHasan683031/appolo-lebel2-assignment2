@@ -6,6 +6,8 @@ const createOrderIntoDB = async (order: order) => {
   // find the ordered product form order collection
   const product: any = await productModel.findOne({ _id: order.productId });
 
+  if(product){
+
   if (order.quantity === product.inventory.quantity) {
     // create order if order quntity and product quntaity both are equale
     const result = await orderModel.create(order);
@@ -56,6 +58,12 @@ const createOrderIntoDB = async (order: order) => {
       message: 'Insufficient quantity available in inventory',
     };
   }
+}else{
+  return {
+    success: false,
+    message: 'sorry product not found',
+  };
+}
 };
 
 const getAllOrdersFromDB = async (queryParams: any) => {

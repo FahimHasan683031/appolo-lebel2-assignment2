@@ -12,7 +12,7 @@ const createOrder = async (req: Request, res: Response) => {
     res.status(200).json({
       success: result.success,
       message: result.message,
-      data: result.data,
+      data: result?.data,
     });
   } catch (err) {
     console.log(err);
