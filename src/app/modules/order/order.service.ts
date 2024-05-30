@@ -1,4 +1,3 @@
-import { product } from '../product/product.interface';
 import { productModel } from '../product/product.model';
 import { order } from './order.interface';
 import { orderModel } from './order.model';
@@ -26,11 +25,11 @@ const createOrderIntoDB = async (order: order) => {
       },
     );
 
-    return  {
+    return {
       success: true,
-      message: "Order created successfully!",
-      data: result
-  }
+      message: 'Order created successfully!',
+      data: result,
+    };
   } else if (order.quantity < product.inventory.quantity) {
     // create order if order quntity lesthen product quntaity
     const result = await orderModel.create(order);
@@ -48,14 +47,14 @@ const createOrderIntoDB = async (order: order) => {
     );
     return {
       success: true,
-      message: "Order created successfully!",
-      data: result
-  }
+      message: 'Order created successfully!',
+      data: result,
+    };
   } else {
     return {
       success: false,
-      message: "Insufficient quantity available in inventory"
-  }
+      message: 'Insufficient quantity available in inventory',
+    };
   }
 };
 
@@ -65,12 +64,34 @@ const getAllOrdersFromDB = async (queryParams: any) => {
     query.email = queryParams.email;
   }
   const result = await orderModel.find(query);
-  return result;
+  if (result.length > 0) {
+    return {
+      success: true,
+      message: 'Order fached successfully!',
+      data: result,
+    };
+  } else {
+    return {
+      success: false,
+      message: 'Order not found',
+    };
+  }
 };
 
 const getSingleOrderFromDB = async (_id: string) => {
   const result = await orderModel.find({ _id });
-  return result;
+  if (result.length > 0) {
+    return {
+      success: true,
+      message: 'Order fached successfully!',
+      data: result,
+    };
+  } else {
+    return {
+      success: false,
+      message: 'Order not found',
+    };
+  }
 };
 
 const deleteSingleOrderFromDB = async (_id: string) => {

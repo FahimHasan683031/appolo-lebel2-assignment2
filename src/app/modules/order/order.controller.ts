@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { orderServices } from './order.service';
 
+
 const createOrder = async (req: Request, res: Response) => {
   try {
     const order = req.body;
@@ -19,14 +20,13 @@ const createOrder = async (req: Request, res: Response) => {
 
 const getAllOrders = async (req: Request, res: Response) => {
   try {
-    const result = await orderServices.getAllOrdersFromDB(req.query);
+    const result:any = await orderServices.getAllOrdersFromDB(req.query);
     res.status(200).json({
-      success: true,
-      message: 'Orders fetched successfully!',
-      data: result,
+      success: result.success,
+      message: result.message,
+      data: result.data,
     });
   } catch (err) {
-    console.log(err);
     res.status(400).send(err);
   }
 };
@@ -36,9 +36,9 @@ const getSingleOrder = async (req: Request, res: Response) => {
     const { orderId } = req.params;
     const result = await orderServices.getSingleOrderFromDB(orderId);
     res.status(200).json({
-      success: true,
-      message: 'order fetched successfully!',
-      data: result,
+      success: result.success,
+      message: result.message,
+      data: result.data,
     });
   } catch (err) {
     console.log(err);
